@@ -1,4 +1,4 @@
-net Speed Test
+Net Speed Test
 ==============
 
 Allows to test connexion speed to various parts of the world. To be client-platform independant, the tests uses Javascript to perform the downloads.
