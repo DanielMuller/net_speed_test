@@ -1,0 +1,10 @@
+[notify]
+	email=notify@example.com
+	from=noreply@example.com
+	from_name=Speed Test
+[region1_name]
+	url=http://region1-server/testfile.bin
+	cdn=false
+[region2_name]
+	url=http://region2-server/testfile.bin
+	cdn=false
