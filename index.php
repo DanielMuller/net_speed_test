@@ -4,10 +4,8 @@
  * */
 $cfg=parse_ini_file("speed.ini",true);
 foreach ($cfg as $key=>$val) {
-	if (strtolower($key)!="notify") {
-		$cdn = ($val['cdn']==true) ? "true":"false";
-		$locationcfg[]="{'location':'".$key."','url':'".$val['url']."','cdn':".$cdn."}";
-	}
+	$cdn = ($val['cdn']==true) ? "true":"false";
+	$locationcfg[]="{'location':'".$key."','url':'".$val['url']."','cdn':".$cdn."}";
 }
 ?>
 <html>
@@ -383,7 +381,7 @@ function TestStarted( testId, count )
 }
 
 function storeResult() {
-	$.post('store.php',{'json':JSON.stringify(result)}); 
+	$.post('store.php',{'json':JSON.stringify(result),'email':$('#email').val()});
 }
 function EndTest(res)
 {
@@ -403,13 +401,30 @@ function EndTest(res)
 }
 
 var result=[];
-$( function()
-{
-	count = 5;
-	StartTest(0,count);
+$( function() {
+	$('#email').keypress(function(e) {
+		$('#email').removeClass('error');
+	});
+	$('#startme').click( function(e)
+	{
+		if ($('#email').val()=="") {
+			$('#email').addClass('error');
+			return false;
+		}
+		count = 5;
+		StartTest(0,count);
+	});
 });
 </script>
 <style type="text/css">
+#email {
+	border:1px solid black;
+	background:white;
+}
+#email.error {
+	border:2px solid red;
+	background: #FFD0D0;
+}
 .progressbarContainer {
 	position:relative;
 	width:400px;
@@ -434,6 +449,10 @@ $( function()
 </style>
 <body>
 <h1>Spuul Speed Test</h1>
+<form action="<?= $_SERVER['PHP_SELF']?>" method="GET">
+Your E-Mail: <input type="text" name="email" id="email" />
+<input type="button" id="startme" value="Start">
+</form>
 <table border="1" cellpadding="2" cellspacing="2">
 <tr>
 <th>Location</th>

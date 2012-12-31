@@ -35,7 +35,7 @@ if ($ip_info['country']=="") $ip_info['country']=$ip_info['country_name'];
 
 $ua=$_SERVER['HTTP_USER_AGENT'];
 
-$log=date("Y-m-d H:i:s")."\t".$ip_info['ip']."\t".$ip_info['country']."\t".$ip_info['state/region'];
+$log=date("Y-m-d H:i:s")."\t".$_POST['email']."\n".$ip_info['ip']."\t".$ip_info['country']."\t".$ip_info['state/region'];
 $log.="\t".$ip_info['city']."\t".$ip_info['isp']."\t".$ip_info['type'];
 foreach ($result as $val) {
 	$log.="\t".$val->location."\t".$val->ping."\t".$val->speed."\t".$val->speedDetails;
@@ -47,7 +47,7 @@ fwrite($fp,$log);
 fclose($fp);
 
 $message="Test made on ".date(DATE_RFC822)."\n\n";
-$message.="From:\n";
+$message.="From: ".$_POST['email']."\n";
 $message.="IP: ".$ip_info['ip']."\n";
 $message.="Country: ".$ip_info['country']."\n";
 if ($ip_info['state/region']) $message.="State: ".$ip_info['state/region']."\n";
